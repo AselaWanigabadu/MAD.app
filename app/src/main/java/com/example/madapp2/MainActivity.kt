@@ -3,6 +3,7 @@ package com.example.madapp2
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.madapp2.databinding.ActivityMainBinding
 
@@ -28,6 +29,22 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, AddNoteActivity::class.java)
             startActivity(intent)
         }
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (!newText.isNullOrEmpty()) {
+                    val filteredNotes = db.getAllNotes().filter { it.title.contains(newText, true) }
+                    notesAdapter.refreshData(filteredNotes)
+                } else {
+                    notesAdapter.refreshData(db.getAllNotes())
+                }
+                return true
+            }
+        })
     }
 
     override fun onResume() {
