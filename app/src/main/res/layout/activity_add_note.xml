@@ -8,7 +8,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
+
+
+    app:circularflow_defaultRadius="5px"
+    app:circularflow_radiusInDP="50px"
     tools:context=".AddNoteActivity">
+
 
     <TextView
         android:id="@+id/addNoteHeadingg"
@@ -16,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="16dp"
-        android:text="Add Booking"
+        android:text="Add Note"
         android:textColor="@color/blue"
         android:textSize="24dp" />
 
@@ -24,37 +29,39 @@
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/baseline_done_24"
-        android:layout_alignParentEnd="true"
         android:layout_alignTop="@id/addNoteHeadingg"
+        android:layout_alignParentEnd="true"
         android:layout_marginEnd="6dp"
+        android:src="@drawable/baseline_done_24"
 
         />
+
     <EditText
         android:id="@+id/titleEditTextt"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:hint="Enter the title"
-        android:padding="12dp"
-        android:textSize="20sp"
         android:layout_below="@+id/addNoteHeadingg"
-        android:background="@drawable/orange_boarder"
         android:layout_marginTop="16dp"
-        android:maxLines="1" />
+        android:background="@drawable/orange_boarder"
+        android:hint="Enter the title"
+        android:maxLines="1"
+        android:padding="12dp"
+        android:textSize="20sp" />
+
     <EditText
         android:id="@+id/contentEditText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:hint="Enter the vahical details"
-        android:gravity="top"
-        android:padding="12dp"
-        android:textSize="18sp"
-
-        android:background="@drawable/orange_boarder"
         android:layout_below="@+id/titleEditTextt"
         android:layout_marginTop="18sp"
+        android:background="@drawable/bg1"
+        android:gravity="top"
+        android:hint="Enter Description. . ."
+        android:padding="12dp"
 
-        />
+        android:shadowRadius="10"
+        android:textSize="18sp"
+        tools:visibility="visible" />
 
 
 </RelativeLayout>
