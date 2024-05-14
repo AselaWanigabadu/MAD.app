@@ -1,5 +1,6 @@
 package com.example.madapp2
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -12,15 +13,15 @@ import androidx.recyclerview.widget.RecyclerView
 import java.nio.file.Files
 
 
-class NotesAdapter (private var notes:List<Note> ,context: Context):RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
+class NotesAdapter(private var notes: List<Note>, private val context: Context) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
 
-    private val db: NoteDataBaseHelper=NoteDataBaseHelper(context)
+    private val db: NoteDataBaseHelper = NoteDataBaseHelper(context)
+
     class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView: TextView = itemView.findViewById(R.id.titleTextview)
         val contentTextView: TextView = itemView.findViewById(R.id.contentTextView)
         val updateButton: ImageView = itemView.findViewById(R.id.updateButton)
         val deleteButton: ImageView = itemView.findViewById(R.id.deleteButton)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
@@ -29,7 +30,6 @@ class NotesAdapter (private var notes:List<Note> ,context: Context):RecyclerView
     }
 
     override fun getItemCount(): Int = notes.size
-
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = notes[position]
@@ -43,11 +43,25 @@ class NotesAdapter (private var notes:List<Note> ,context: Context):RecyclerView
             holder.itemView.context.startActivity(intent)
         }
 
-        holder.deleteButton.setOnClickListener{
-            db.deleteNote(note.id)
-            refreshData(db.getAllNotes())
-            Toast.makeText(holder.itemView.context,"Note Deleted !",Toast.LENGTH_SHORT).show()
+        holder.deleteButton.setOnClickListener {
+            showDeleteConfirmationDialog(note.id)
         }
+    }
+
+    private fun showDeleteConfirmationDialog(noteId: Int) {
+        val alertDialogBuilder = AlertDialog.Builder(context)
+        alertDialogBuilder.setTitle("Delete Note")
+        alertDialogBuilder.setMessage("Are you sure you want to delete this note?")
+        alertDialogBuilder.setPositiveButton("Yes") { _, _ ->
+            db.deleteNote(noteId)
+            refreshData(db.getAllNotes())
+            Toast.makeText(context, "Note Deleted!", Toast.LENGTH_SHORT).show()
+        }
+        alertDialogBuilder.setNegativeButton("No") { dialog, _ ->
+            dialog.dismiss()
+        }
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 
     fun refreshData(newNotes: List<Note>) {
@@ -55,5 +69,3 @@ class NotesAdapter (private var notes:List<Note> ,context: Context):RecyclerView
         notifyDataSetChanged()
     }
 }
-
-//

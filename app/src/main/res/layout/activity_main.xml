@@ -29,11 +29,9 @@
         android:layout_alignParentEnd="true"
         android:layout_marginHorizontal="16dp"
         android:layout_marginStart="127dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="-15dp"
-        android:queryHint="Search notes..."
-
+        android:queryHint="Search notes...."
         app:iconifiedByDefault="false" />
 
     <androidx.recyclerview.widget.RecyclerView
